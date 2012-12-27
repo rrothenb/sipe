@@ -1,0 +1,100 @@
+int numBalls = 12;
+
+float spring = 0.05;
+
+float gravity = 0.03;
+
+Ball[] balls = new Ball[numBalls];
+
+void setup() {
+    size(800, 800);
+    noStroke();
+    smooth();
+    for (int i = 0; i < numBalls; i++) {
+        balls[i] = new Ball(random(width), random(height), random(20, 40), i, balls);
+    }
+}
+
+void draw() {
+    background(0);
+    for (int i = 0; i < numBalls; i++) {
+        balls[i].collide();
+        balls[i].move();
+        balls[i].display();
+    }
+}
+
+class Ball {
+    float diameter;
+    PVector p;
+    PVector v;
+    int id;
+
+    Ball[] others;
+    Ball(float xin, float yin, float din, int idin, Ball[] oin) {
+        p = new PVector(xin, yin);
+        v = new PVector(0,0);
+        diameter = din;
+        id = idin;
+        others = oin;
+    }
+
+    void collide() {
+        for (int i = id + 1; i < numBalls; i++) {
+            PVector d = PVector.sub(others[i].p, p);
+            float distance = d.mag();
+            float minDist = others[i].diameter/2 + diameter/2;
+            if (distance < minDist) {
+                float angle = atan2(d.y, d.x);
+                float targetX = p.x + cos(angle) * minDist;
+                float targetY = p.y + sin(angle) * minDist;
+                float ax = (targetX - others[i].p.x) * spring;
+                float ay = (targetY - others[i].p.y) * spring;
+                PVector a = new PVector(ax, ay);
+                v.sub(a);
+                others[i].v.add(a);
+            }
+        }
+    }
+
+    void move() {
+        PVector center = new PVector(width/2, height/2);
+        PVector down = PVector.sub(center, p);
+        down.normalize();
+        v.add(PVector.mult(down, gravity));
+        p.add(v);
+        if (p.x + diameter/2 > width) {
+            p.x = width - diameter/2;
+            v.x += -0.9;
+        }
+        else if (p.x - diameter/2 < 0) {
+            p.x = diameter/2;
+            v.x *= -0.9;
+        }
+        if (p.y + diameter/2 > height) {
+            p.y = height - diameter/2;
+            v.y *= -0.9;
+        }
+        else if (p.y - diameter/2 < 0) {
+            p.y = diameter/2;
+            v.y *= -0.9;
+        }
+    }
+
+    void display() {
+        fill(255, 204);
+        ellipse(p.x, p.y, diameter, diameter);
+    }
+}
+
+/*
+
+Next work on gravity model.  Probably rewrite move.  currently looks like gravity is the acceleration due to gravity per frame.  It's independent of size of the circle.  That won't work for me.  I also need to have logic
+to bounce off walls.
+
+Since the force due to gravity is proportional to m1*m2, but the acceleration due to force is inversely proportional to m, then the acceleration due to gravity is only due to the mass of the fixed point.  So it won't go faster, but would it push
+other stuff out of the way?  I don't think that's modeled here by just bouncing ... or is it?  Bouncing should be affected by mass, should it not?  If two of the balls repulse each other equally, the smaller one will go away faster.
+
+conservation of linear momentum - m1*v1b + m2*v2b = m1*v1a + m2*v2a
+
+*/
