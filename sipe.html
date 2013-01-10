@@ -2,9 +2,21 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="sipe.css">
     <script type="text/javascript" src="processing-1.4.1.js"></script>
 </head>
 <body>
-<canvas width="800" height="800" datasrc="sipe.pjs"></canvas>
+<audio id="Boing02" preload="auto"><source src="sounds/Boing02.wav" type="audio/wav"></audio>
+<audio id="Boing03" preload="auto"><source src="sounds/Boing03.wav" type="audio/wav"></audio>
+<audio id="Whizz" preload="auto"><source src="sounds/Whizz.wav" type="audio/wav"></audio>
+<script type="application/javascript">
+    var playSound = function (tag) {
+        document.getElementById(tag).play();
+    };
+</script>
+<div>
+    <input type="text" placeholder="Enter Title Here"/>
+</div>
+<canvas datasrc="sipe.pjs"></canvas>
 </body>
 </html>
