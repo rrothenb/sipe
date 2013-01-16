@@ -58,9 +58,10 @@ void setup() {
     textAlign(CENTER);
     smooth();
 
-    _gaq.push(['_trackEvent', 'Browser Area', 'load', window.innerWidth + 'x' + window.innerHeight, window.innerWidth*window.innerHeight]);
-    _gaq.push(['_trackEvent', 'Names', 'number', names.length]);
+    _gaq.push(['_trackEvent', 'Browser Area', 'load', "" + window.innerWidth + "x" + window.innerHeight, window.innerWidth*window.innerHeight]);
+    _gaq.push(['_trackEvent', 'Names', 'number', '', names.length]);
     _gaq.push(['_trackEvent', 'Names', 'longest', longestName, longestName.length()]);
+    console.log(_gaq)
 }
 
 void setRandomStartingPoint(Ball ball) {
