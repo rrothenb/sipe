@@ -42,10 +42,11 @@ void setup() {
 
     String longestName = "";
     for (int i = 0; i < names.length; i++) {
-        if (longestName.length() < names[i].length()) {
-            longestName = names[i];
+        String name = decodeURIComponent(names[i]);
+        if (longestName.length() < name.length()) {
+            longestName = name;
         }
-        Ball newBall = new Ball(0, 0, 60, i, balls, decodeURIComponent(names[i]));
+        Ball newBall = new Ball(0, 0, 60, i, balls, name);
         setRandomStartingPoint(newBall);
         while (overlapsOthers(newBall,balls,i)) {
             setRandomStartingPoint(newBall);
@@ -57,9 +58,9 @@ void setup() {
     textAlign(CENTER);
     smooth();
 
-    _gaq.push(['_trackEvent', 'Browser Area', 'load', window.innerWidth + 'x' + window.innerHeight, window.innerWidth*window.innerHeight])
-    _gaq.push(['_trackEvent', 'Names', 'number', names.length])
-    _gaq.push(['_trackEvent', 'Names', 'longest', longestName, longestName.length()])
+    _gaq.push(['_trackEvent', 'Browser Area', 'load', window.innerWidth + 'x' + window.innerHeight, window.innerWidth*window.innerHeight]);
+    _gaq.push(['_trackEvent', 'Names', 'number', names.length]);
+    _gaq.push(['_trackEvent', 'Names', 'longest', longestName, longestName.length()]);
 }
 
 void setRandomStartingPoint(Ball ball) {
