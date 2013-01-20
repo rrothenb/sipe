@@ -193,11 +193,14 @@ class Connection {
         }
         Connection connection = find(a, b);
         if (connection == null) {
-            connections.add(new Connection(a, b));
+            connection = new Connection(a, b);
+            connections.add(connection);
         }
         else {
             connection.strength++;
         }
+        _gaq.push(['_trackEvent', 'Connections', 'add', first.name, connection.strength]);
+        _gaq.push(['_trackEvent', 'Connections', 'add', second.name, connection.strength]);
     }
 
     static Connection find(Ball a, Ball b) {
