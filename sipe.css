@@ -1,9 +1,9 @@
-input {
+div.title input {
     font-size: 36px;
     text-align: center;
     margin-bottom: 10px;
 }
 
-div {
+div.title {
     text-align: center;
 }

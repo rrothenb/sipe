@@ -4,6 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="sipe.css">
     <script type="text/javascript" src="processing-1.4.1.js"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
 <audio id="Boing02" preload="auto"><source src="sounds/Boing02.wav" type="audio/wav"></audio>
@@ -14,10 +15,34 @@
         document.getElementById(tag).play();
     };
 </script>
-<div>
+<div class="title">
     <input type="text" placeholder="Enter Title Here"/>
 </div>
 <canvas datasrc="sipe.pjs"></canvas>
+<div class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3>Welcome to SIPE</h3>
+    </div>
+    <div class="modal-body">
+        <p>SIPE is a tool for encouraging communication between students.  You click on the circles representing students to indicate which pair of students spoke to one another.  SIPE shows this in an entertaining fashion (at least that's the idea).</p>
+        <p>In order to use it, you will need to edit the URL to include the names of the students.  The URL for SIPE should look like this:</p>
+        <code>http://rrothenb.github.com/sipe/?Name1&Name2&Name3</code>
+        <p>using as many names as you wish.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+    </div>
+</div>
+<script src="jquery-1.9.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.location.search) {
+            $('.modal').modal('show');
+        }
+    });
+</script>
 <script type="text/javascript">
 
     var _gaq = _gaq || [];
